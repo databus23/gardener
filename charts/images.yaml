@@ -56,7 +56,7 @@ images:
 
 # Shoot core addons
 - name: calico-node
-  repository: quay.io/calico/node
+  repository: hub.global.cloud.sap/monsoon/calico-node
   tag: v3.1.2
 - name: calico-cni
   repository: quay.io/calico/cni
