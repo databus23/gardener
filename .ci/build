@@ -44,14 +44,12 @@ VERSION="$(cat "${VERSION_FILE}")"
 # to build for linux OS, amd64 architectures and without CGO enablement.
 if [[ -z "$LOCAL_BUILD" ]]; then
   CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-    -a \
     -v \
     -o ${BINARY_PATH}/rel/gardener-apiserver \
     -ldflags "-w -X github.com/gardener/gardener/pkg/version.Version=${VERSION}" \
     cmd/gardener-apiserver/*.go
 
   CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
-    -a \
     -v \
     -o ${BINARY_PATH}/rel/gardener-controller-manager \
     -ldflags "-w -X github.com/gardener/gardener/pkg/version.Version=${VERSION}" \

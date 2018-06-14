@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-REGISTRY                           := eu.gcr.io/gardener-project/gardener
-APISERVER_IMAGE_REPOSITORY         := $(REGISTRY)/apiserver
-CONROLLER_MANAGER_IMAGE_REPOSITORY := $(REGISTRY)/controller-manager
+REGISTRY                           := hub.global.cloud.sap/monsoon
+APISERVER_IMAGE_REPOSITORY         := $(REGISTRY)/gardener-apiserver
+CONROLLER_MANAGER_IMAGE_REPOSITORY := $(REGISTRY)/gardener-controller-manager
 IMAGE_TAG                          := $(shell cat VERSION)
 
 #########################################
@@ -86,10 +86,10 @@ docker-login:
 docker-push:
 	@if ! docker images $(APISERVER_IMAGE_REPOSITORY) | awk '{ print $$2 }' | grep -q -F $(IMAGE_TAG); then echo "$(APISERVER_IMAGE_REPOSITORY) version $(IMAGE_TAG) is not yet built. Please run 'make docker-images'"; false; fi
 	@if ! docker images $(CONROLLER_MANAGER_IMAGE_REPOSITORY) | awk '{ print $$2 }' | grep -q -F $(IMAGE_TAG); then echo "$(CONROLLER_MANAGER_IMAGE_REPOSITORY) version $(IMAGE_TAG) is not yet built. Please run 'make docker-images'"; false; fi
-	@gcloud docker -- push $(APISERVER_IMAGE_REPOSITORY):$(IMAGE_TAG)
-	@gcloud docker -- push $(APISERVER_IMAGE_REPOSITORY):latest
-	@gcloud docker -- push $(CONROLLER_MANAGER_IMAGE_REPOSITORY):$(IMAGE_TAG)
-	@gcloud docker -- push $(CONROLLER_MANAGER_IMAGE_REPOSITORY):latest
+	@docker push $(APISERVER_IMAGE_REPOSITORY):$(IMAGE_TAG)
+	@docker push $(APISERVER_IMAGE_REPOSITORY):latest
+	@docker push $(CONROLLER_MANAGER_IMAGE_REPOSITORY):$(IMAGE_TAG)
+	@docker push $(CONROLLER_MANAGER_IMAGE_REPOSITORY):latest
 
 .PHONY: rename-binaries
 rename-binaries:
